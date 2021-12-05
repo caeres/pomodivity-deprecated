@@ -7,51 +7,57 @@ let longBreakIntervall = "15";
 
 let timerBtns = document.getElementsByClassName("btn-timer");
 
+const state = {
+  isTimerStarted: false,
+  timerDisplay: "00:00",
+};
+
 // assigns all buttons with an "click" eventlistener
 (async () => {
-    // doesnt acutally need an event listener rn, just opens the modal, which happens in HTML
-    // could shift that tho, so that all funcitonality is js side?
-    // document.getElementById("settingsBtn").addEventListener("click", onClickMain);
+  // doesnt acutally need an event listener rn, just opens the modal, which happens in HTML
+  // could shift that tho, so that all funcitonality is js side?
+  // document.getElementById("settingsBtn").addEventListener("click", onClickMain);
 
-    //question: when add a funciton to async (yea i prolly forgot and you already told me)
-    document.getElementById("timerDisplay").innerHTML = pomodoroIntervall + ":00";
+  //question: when add a funciton to async (yea i prolly forgot and you already told me)
+  document.getElementById("timerDisplay").innerHTML = pomodoroIntervall + ":00";
 
-    document.getElementById("pomoBtn").addEventListener("click", onClickPomo);
-    document.getElementById("shortBtn").addEventListener("click", onClickShortBreak);
-    document.getElementById("longBtn").addEventListener("click", onClickLongBreak);
-    document.getElementById("mainBtn").addEventListener("click", onClickMain);
-    document.getElementById("modalSaveBtn").addEventListener("click", onClickSaveSettings);
+  document.getElementById("pomoBtn").addEventListener("click", onClickPomo);
+  document.getElementById("shortBtn").addEventListener("click", onClickShortBreak);
+  document.getElementById("longBtn").addEventListener("click", onClickLongBreak);
+  document.getElementById("mainBtn").addEventListener("click", onClickMain);
+  document.getElementById("modalSaveBtn").addEventListener("click", onClickSaveSettings);
 })();
 
 //start the countdown timer -höhö later
 // settimeout (prolly due performacne) oder setintervall
-function startTimer(){}
+function startTimer() {}
 
 // change the values of the Intervall variable on modal dismissal
-function onClickSaveSettings(){
-    //get input value and update env vars
-    pomodoroIntervall = document.getElementById("inputPomo").value;
-    shortBreakIntervall = document.getElementById("inputShort").value;
-    longBreakIntervall = document.getElementById("inputLong").value;
-    //update the shown timer - depends on the currently active button?
-    
+function onClickSaveSettings() {
+  //get input value and update env vars
+  pomodoroIntervall = document.getElementById("inputPomo").value;
+  shortBreakIntervall = document.getElementById("inputShort").value;
+  longBreakIntervall = document.getElementById("inputLong").value;
+  //update the shown timer - depends on the currently active button?
 }
 
 //function to check timer button for active state
-function checkTimerBtnState(){}
+function checkTimerBtnState() {}
 //function to change timer button state
-function toggleTimerBtnState(){}
+function toggleTimerBtnState() {}
 //change the value of the timer to fit the pressed button (how to handle display switch while timer is runnnign?)
-function onClickPomo(){
-    document.getElementById("timerDisplay").innerHTML = pomodoroIntervall + ":00";
+function onClickPomo() {
+  state.timerDisplay = pomodoroIntervall + ":00";
+  updateView();
 }
-function onClickShortBreak(){
-    document.getElementById("timerDisplay").innerHTML = shortBreakIntervall + ":00";
+function onClickShortBreak() {
+  state.timerDisplay = shortBreakIntervall + ":00";
+  updateView();
 }
-function onClickLongBreak(){
-    document.getElementById("timerDisplay").innerHTML = longBreakIntervall + ":00";
+function onClickLongBreak() {
+  state.timerDisplay = longBreakIntervall + ":00";
+  updateView();
 }
-
 
 /**
  * Toggles the CSS classes for the start button
@@ -59,24 +65,30 @@ function onClickLongBreak(){
  * must not change the active timer button! (otherwise user doesnt know which timer is ticking down)
  */
 function onClickMain() {
-    const mainBtn = document.getElementById("mainBtn");
-    if (mainBtn.innerHTML == "Start") {
-        mainBtn.innerHTML = "Stop";
-        mainBtn.classList.toggle("btn-start");
-        mainBtn.classList.toggle("btn-stop");
-    } else {
-        mainBtn.innerHTML = "Start";
-        mainBtn.classList.toggle("btn-stop");
-        mainBtn.classList.toggle("btn-start");
-    }
-    startTimer();
+  state.isTimerStarted = !state.isTimerStarted;
+  updateView();
+  startTimer();
 }
 
-// in timer function 
+// in timer function
 function displayTodaysCycles() {
-    document.getElementById("todaysCycles").innerHTML = cycles;
+  document.getElementById("todaysCycles").innerHTML = cycles;
 }
 
+function updateView() {
+  const mainBtn = document.getElementById("mainBtn");
+  mainBtn.classList.remove("btn-stop");
+  mainBtn.classList.remove("btn-start");
+  if (state.isTimerStarted) {
+    mainBtn.innerHTML = "Stop";
+    mainBtn.classList.add("btn-stop");
+  } else {
+    mainBtn.innerHTML = "Start";
+    mainBtn.classList.add("btn-start");
+  }
+
+  document.getElementById("timerDisplay").innerHTML = state.timerDisplay;
+}
 
 /*
 more shit to learn:
@@ -93,4 +105,4 @@ frameworks: angular(babo), react(kein fan aber mal gucken), vue(nah), next(ansch
 firebase, django, flask
 -> back end
 
-*/ 
+*/
