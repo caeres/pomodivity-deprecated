@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pomodivity</title>
+    <meta name="description" content="pomodoro time management tracker, like many others">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abel" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <div>Pomodivity</div>
+        <button class="btn-settings" id="settingsBtn" data-toggle="modal" data-target="#settingsModal">Settings</button>
+    </header>
+    <div class="wrapper">
+        <div class="main">
+            <div class="content">
+                <div class="timer-display">
+                    <div class="timer-settings">
+                        <button id="pomoBtn" class="btn-timer btn-timer-active-visual">Pomodoro</button>
+                        <button id="shortBtn" class="btn-timer">Short break</button>
+                        <button id="longBtn" class="btn-timer">Long break</button>
+                    </div>
+                    <!-- proll<y use input tag -->
+                    <div id="timerDisplay" class="timer-string"></div> 
+                    <div class="btn-start-display">
+                        <button id="mainBtn" class="btn btn-start">Start</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <div class="today">Today:</div>
+                <div id="todaysCycles" class="today-cycles">#0</div>
+            </div>
+        </div>
+    </div>
+    <!-- create settings modal -->
+    <div class="modal fade" id="settingsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Timer Settings (in minutes)</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            <div class="settings-modal-body">
+                <div class="settings-modal-section">
+                    <div>Pomodoro:</div>
+                    <input id="inputPomo" type="number" value="25">
+                </div>
+                <div class="settings-modal-section">
+                    <div>Short break:</div>
+                    <input id="inputShort" type="number" value="5">
+                </div>
+                <div class="settings-modal-section">
+                    <div>Long break:</div>
+                    <input id="inputLong" type="number" value="10">
+                </div>    
+            </div>
+            <div class="modal-footer">
+              <button id="modalSaveBtn" type="button" class="btn btn-modal" data-dismiss="modal">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript" src="index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
