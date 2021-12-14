@@ -50,7 +50,7 @@ settingsState = new Settings(standardPomodoroInterval, standardShortBreakInterva
 const state = {
     timerState: false,
     timerDisplay: settingsState.getPomoInterval(),
-    activeButton: "pomoBtn" 
+    activeButton: "pomoBtn"
 }; // YO WTF WHY DO I HAVE TO FUCKOING PLACE A ; THERE?????XDDDDDDD KYS JS THIS FUCKIONG SHIT TOOK ME 2 HOURS TO FIND OUT 
 
 // assigns all buttons with an "click" eventlistener, sets first timerstate
@@ -104,6 +104,8 @@ function startTimer(maxTime){
             }
             clearInterval(interval);
             state.timerState = false;
+        } else if (!state.timerState){
+            clearInterval(interval);
         }
     }, 1000);
 }
@@ -121,7 +123,7 @@ function onClickSaveSettings(){
     let validateObject = [
         pomodoroInterval, shortBreakInterval, longBreakInterval
     ];
-    //this is so iffy
+    //this is so iffy but it works so.... 
     let validityCheck = true;
     for (let i = 0; i < 3; i++){
         if(validateSettingsInput(validateObject[i]) == false) {
@@ -129,13 +131,21 @@ function onClickSaveSettings(){
             validityCheck = false;
         } 
     } 
-    if (validityCheck){
+    if (validityCheck &&  state.timerState == false){
         settingsState.updateSettings(stringToMs(pomodoroInterval), stringToMs(shortBreakInterval), stringToMs(longBreakInterval)); 
         
         // update state dependent on the current active button (might be possible differently)
-        if (state.activeButton == "pomoBtn"){state.timerDisplay = settingsState.getPomoInterval();}
-        else if (state.activeButton == "shortBtn"){state.timerDisplay = settingsState.getShortBreakInterval();}
-        else {state.timerDisplay = settingsState.getLongBreakInterval();}
+        if (state.activeButton == "pomoBtn"){
+            state.timerDisplay = settingsState.getPomoInterval();
+        } else if (state.activeButton == "shortBtn"){
+            state.timerDisplay = settingsState.getShortBreakInterval();
+        } else {
+            state.timerDisplay = settingsState.getLongBreakInterval();
+        }
+    }
+    // just to make
+    if (state.timerState) {
+        alert("You cannot change the settings while the timer is running!")
     }
 }
 
@@ -157,7 +167,7 @@ function onClickLongBreak(){
 
 //reminder: give the correct /**  */ descriptions for funcitons as soon as youre finished!
 function onClickMain(){
-    if (state.timerState == false){
+    if (!state.timerState){
         state.timerState = true;
         startTimer(state.timerDisplay);
     } else {
@@ -173,7 +183,7 @@ function updateView(){
         btn = timerBtns[i];
         btn.classList.remove("btn-timer-active-visual");
     }
-    if (state.timerState == true) {
+    if (state.timerState) {
         mainBtn.classList.add("btn-stop");
         mainBtn.innerHTML = "Stop"; 
         } else {
